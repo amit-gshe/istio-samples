@@ -31,7 +31,7 @@ spec:
       containers:
       - args:
         - --address=127.0.0.1:8080
-        image: gcr.io/$GOOGLE_CLOUD_PROJECT/grpc-greeter-go-server
+        image: registry.ap-southeast-1.aliyuncs.com/clipclaps/grpc-greeter-go:server
         imagePullPolicy: Always
         livenessProbe:
           exec:
@@ -48,6 +48,8 @@ spec:
             - /bin/grpc_health_probe
             - -addr=:8080
           initialDelaySeconds: 2
+      imagePullSecrets:
+        - name: aliyun-image-registry-secret-ap-southeast-1
 # [END istio_grpc_greeter_go_manifests_deployment_greeter]
 ---
 # [START istio_grpc_greeter_go_manifests_service_greeter]
