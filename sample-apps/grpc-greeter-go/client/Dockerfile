@@ -31,7 +31,7 @@ RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go install -installsuffix "static" .
 
 # https://docs.docker.com/develop/develop-images/multistage-build/#use-multi-stage-builds
 
-FROM busybox
+FROM alpine
 
 COPY --from=build /go/bin/client /bin/greeter-client
 

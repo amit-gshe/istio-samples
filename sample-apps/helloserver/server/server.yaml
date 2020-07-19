@@ -29,11 +29,13 @@ spec:
         app: helloserver
     spec:
       containers:
-      - image: gcr.io/google-samples/istio/helloserver:v0.0.1
+      - image: registry.ap-southeast-1.aliyuncs.com/clipclaps/istio-samples:helloserver
         imagePullPolicy: Always
         name: main
       restartPolicy: Always
       terminationGracePeriodSeconds: 5
+      imagePullSecrets:
+        - name: aliyun-image-registry-secret-ap-southeast-1
 # [END istio_helloserver_server_deployment_helloserver]
 ---
 # [START istio_helloserver_server_service_hellosvc]
@@ -48,6 +50,6 @@ spec:
     targetPort: 8080
   selector:
     app: helloserver
-  type: LoadBalancer
+  # type: NodePort
 # [END istio_helloserver_server_service_hellosvc]
 ---
