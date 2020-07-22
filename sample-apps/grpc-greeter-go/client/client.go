@@ -99,6 +99,7 @@ func main() {
 			hostname = header["hostname"][0]
 		}
 		log.Printf("%s from %s", r.Message, hostname)
+		time.Sleep(time.Duration(1) * time.Second)
 		// [END istio_sample_apps_grpc_greeter_go_client_hostname]
 	}
 }
