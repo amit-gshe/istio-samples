@@ -84,12 +84,9 @@ func main() {
 		name = nonFlagArgs[1]
 	}
 
-	// Contact the server and print out its response multiple times.
-	ctx, cancel := context.WithTimeout(context.Background(), timeout)
-	defer cancel()
 	for i := 0; i < *repeat; i++ {
 		var header metadata.MD
-		r, err := c.SayHello(ctx, &pb.HelloRequest{Name: name}, grpc.Header(&header))
+		r, err := c.SayHello(context.Background(), &pb.HelloRequest{Name: name}, grpc.Header(&header))
 		if err != nil {
 			log.Fatalf("could not greet: %v", err)
 		}
