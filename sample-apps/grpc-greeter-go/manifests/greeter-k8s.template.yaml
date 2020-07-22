@@ -30,7 +30,7 @@ spec:
     spec:
       containers:
       - args:
-        - --address=127.0.0.1:8080
+        - --address=0.0.0.0:8080
         image: registry.ap-southeast-1.aliyuncs.com/clipclaps/grpc-greeter-go:server
         imagePullPolicy: Always
         livenessProbe:
@@ -64,6 +64,6 @@ spec:
     protocol: TCP
   selector:
     app: greeter
-  type: ClusterIP
+  clusterIP: None
 # [END istio_grpc_greeter_go_manifests_service_greeter]
 ---

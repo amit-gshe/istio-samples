@@ -34,9 +34,11 @@ import (
 	"time"
 
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/balancer/roundrobin"
 	"google.golang.org/grpc/credentials"
 	pb "google.golang.org/grpc/examples/helloworld/helloworld"
 	"google.golang.org/grpc/metadata"
+	"google.golang.org/grpc/resolver"
 )
 
 const (
@@ -52,16 +54,17 @@ func main() {
 	flag.Parse()
 
 	// Set up a connection to the server.
+	resolver.SetDefaultScheme("dns")
 	var conn *grpc.ClientConn
 	var err error
 	if *insecure {
-		conn, err = grpc.Dial(*address, grpc.WithInsecure())
+		conn, err = grpc.Dial(*address, grpc.WithInsecure(), grpc.WithBalancerName(roundrobin.Name))
 	} else {
 		tc, err := credentials.NewClientTLSFromFile(*cert, "")
 		if err != nil {
 			log.Fatalf("Failed to generate credentials %v", err)
 		}
-		conn, err = grpc.Dial(*address, grpc.WithTransportCredentials(tc))
+		conn, err = grpc.Dial(*address, grpc.WithTransportCredentials(tc), grpc.WithBalancerName(roundrobin.Name))
 	}
 	if err != nil {
 		log.Fatalf("did not connect: %v", err)
